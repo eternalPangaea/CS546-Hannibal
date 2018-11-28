@@ -1,0 +1,19 @@
+<button onclick="goBack()">Go Back</button>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+<a href="">Edit/</a>
+<a href="">Delete</a>
+<h1 id="the-heading">Your posted items '{{product.name}}'</h1>
+<div class="row">
+    <div class="col-sm-12">		
+    	<p>category: {{product.category_id}}</p>
+		<p>price: {{product.price}}</p>
+		<p>description: {{product.description}}</p>
+		<p>contact_email: {{product.contact_email}}</p>
+		<img src="{{product.pics}}" width=500 height=500>
+		
+	</div>
+</div>

@@ -23,14 +23,14 @@ const exportedMethods = {
 
 	async addProduct(name, price, description, pics, contact_email, category_id){
 		if(typeof name != "string") throw "No product's name provided";
-		if(typeof price != "number") throw "No product's price provided";
+		//if(typeof price != "number") throw "No product's price provided";
 		if(typeof description != "string") throw "No product's description provided";
-		if (!Array.isArray(pics)) throw "No product's pictures provided";
+		//if (!Array.isArray(pics)) throw "No product's pictures provided";
 		if(typeof contact_email != "string") throw "No product's contact_email provided";
-		if(typeof category_id != "number") throw "No product's category_id provided";
+		//if(typeof category_id != "number") throw "No product's category_id provided";
 
 		const productsCollection = await products();
-		
+
 		const newProduct = {
 			_id: uuid(),//product_id
 			name: name,
@@ -49,3 +49,7 @@ const exportedMethods = {
 }
 
 module.exports = exportedMethods;
+
+
+
+
