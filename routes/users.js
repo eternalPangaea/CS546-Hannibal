@@ -1,19 +1,27 @@
 const express = require("express");
 const router = express.Router();
-
+const bcrypt = require("bcrypt");
+const saltRounds = 16;
 const data = require("../data");
 const userData = data.users;
 
 router.post("/", async(req, res) => {
 	try{
 		const upload = req.body;
-		let result = await userData.addUser(upload.user_name, upload.user_pass, upload.contact_email);
-		res.json(result);
+		if(await userData.getUserByName(upload.user_name)){
+			const hashpass = await bcrypt.hash(upload.user_pass,saltRounds);
+			let result = await userData.addUser(upload.user_name, hashpass, upload.contact_email);
+			res.redirect("/hannibal/login");
+		}
+		else{
+			res.render("users/signup", {message:"This username has been taken."});
+		}
 	}
 	catch(e){
-		res.status(500).json({error: e});
+		res.redirect("/hannibal/signup");
 	}
 });
+
 
 router.get("/email/:id", async(req, res) => {
 	try{

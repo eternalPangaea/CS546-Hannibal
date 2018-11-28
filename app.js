@@ -44,7 +44,7 @@ app.use("/hannibal/pics", pic);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars",  handlebarsInstance.engine);
 app.set("view engine", "handlebars");
 
 configRoutes(app);

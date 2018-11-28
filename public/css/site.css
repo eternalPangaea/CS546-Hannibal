@@ -1,0 +1,9 @@
+#error_username{
+	display: inline-block; 
+	float:left;
+	color:red;
+}
+
+#user_name{
+	float:left;
+}

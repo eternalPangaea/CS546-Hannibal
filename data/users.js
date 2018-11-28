@@ -1,8 +1,20 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
+
 const uuid = require("uuid/v4");
 
 const exportedMethods = {
+	async getUserByName(name){
+		const userCollection = await users();
+		const user = await userCollection.findOne({user_name: name});
+		if(!user){
+			 return true;
+		}
+		else{
+			return false;
+		}
+	}, 
+
 	async addUser(name,pass,email){
 		const userCollection = await users();
 		const newUser = {
@@ -11,7 +23,6 @@ const exportedMethods = {
 			user_pass: pass,
 			contact_email: email
 		};
-
 		const newUserInfo = await userCollection.insertOne(newUser);
 		return newUser;
 	},
