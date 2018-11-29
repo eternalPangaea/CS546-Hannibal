@@ -1,0 +1,28 @@
+<article>
+  <header>
+    <h2>Shop By Categories</h2>
+  </header>
+
+  {{#if error}}
+  <div id="login-error" class="error">
+    <h3>Error:</h3>
+    {{ error }}
+  </div>
+   {{/if}}
+
+
+  <nav class="nav">
+  {{#each category_products}}
+   <a class="nav-link active" href="#">{{category_name}}</a>
+  {{/each}}  
+  </nav>
+
+  {{#each category_products}}
+    <div>
+    {{category_name}}
+    </div>
+    <div>
+    {{names}}
+    </div>
+  {{/each}}
+</article>
