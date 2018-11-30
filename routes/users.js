@@ -30,7 +30,8 @@ router.post("/login", async(req, res) => {
 		if(await bcrypt.compare(upload.user_pass, userInfo.user_pass)){
 			req.session.user = {"user_id":userInfo._id};
 			//console.log(req.session);
-			res.status(200).render("index",{"user": req.session.user});
+			res.status(200).redirect("http://localhost:3000/hannibal/");
+			//res.status(200).render("index",{"user": req.session.user});
 		}
 		else{
 			res.status(201).render("users/login", {message:"username/password is not correct!"});

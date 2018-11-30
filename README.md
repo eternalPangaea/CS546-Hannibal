@@ -1,21 +1,14 @@
 Test
 
-upload a product: http://localhost:3000/hannibal/upload
+Generally, combine task 1, 2 and 5.
 
-check users's posted products: http://localhost:3000/hannibal/postItems/:user_id
+How to test?
 
-to see the info of user's posted product: http://localhost:3000/hannibal/product/:product_id
+1. sign up your test user account, go to: http://localhsot:3000/hannibal/signup
 
+2. when you sign up, you should automatically redirect to login url and type your account and pass to login.
 
-Because we didn't realize the local storage for user_id, so to run this project you should:
-1. use postman to crate a user account, 
-	url: http://localhost:3000/hannibal/user, 
-	method: POST
-	data: {"user_name":"stevens","user_pass":"123","contact_email":"111@126.com"}
+3. When you login, you will automatically redirect to our home page. You'll see a link called posted items which show all products that this account posts. 
 
-2. Go to your mongoldb, check the collection "users" to find the '_id' of the account that we created
+4. You can also upload a new product, when you go to posted items link.
 
-3. Copy the _id and paste it to /public/js/hannibal.js there is a variable 'user_id' and replace it with your copy _id.
-
-4. Copy the _id and paste it to views/products/uploadProduct.handlebars, 
-	<input type="hidden" name = "user_id" value="02"> replace value by the copy _id

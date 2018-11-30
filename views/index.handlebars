@@ -2,8 +2,8 @@
   <header>
     <h1>Shop By Categories</h1>
   </header>
-{{#if user}}
-<a href="http://localhost:3000/hannibal/postItems/{{user.user_id}}">posted items</a>
+{{#if user_id}}
+	<a href="http://localhost:3000/hannibal/postItems/{{user_id}}">posted items</a>
 {{/if}}
   {{#if error}}
   <div id="login-error" class="error">

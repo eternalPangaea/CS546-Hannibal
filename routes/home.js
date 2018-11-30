@@ -17,7 +17,10 @@ router.get("/", async(req, res) => {
             await category_products.push(category_product);
             category_product = {};
 		}
-		await res.render('index',{"category_products":category_products});
+		if(req.session.user)
+			await res.render('index',{"category_products":category_products, "user_id":req.session.user.user_id});
+		else
+			await res.render('index',{"category_products":category_products});
 	}
 	catch(e){
 		console.log(e);
