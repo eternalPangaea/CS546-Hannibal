@@ -2,18 +2,19 @@
     $("#submit").click(function(){
       $.ajax({
         type:"POST",
-        dataType: "JSON",
-        url: "http://localhost:3000/hannibal/user",
+        url: "http://localhost:3000/hannibal/user/login",
+        dataType: "text",
         data: JSON.stringify({
           user_name: $("#user_name").val(),
-          user_pass: $("#user_pass").val(),
-          contact_email: $("#contact_email").val()
+          user_pass: $("#user_pass").val()
         }),
         contentType:"application/json",
-        success: function(result){
-           location.reload();
-        }
-        
+        success: function(data,textStatus, xhr){
+          if(xhr.status == 200)
+            alert("success");
+          else
+            alert("failed")
+        },
       });
     });        
 })(jQuery);

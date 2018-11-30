@@ -1,0 +1,32 @@
+<article>
+  <header>
+    <h1>Shop By Categories</h1>
+  </header>
+{{#if user}}
+<a href="http://localhost:3000/hannibal/postItems/{{user.user_id}}">posted items</a>
+{{/if}}
+  {{#if error}}
+  <div id="login-error" class="error">
+    <h3>Error:</h3>
+    {{ error }}
+  </div>
+   {{/if}}
+
+
+  <ul class = "navi">
+  {{#each category_products}}
+   <li><a href='#{{category_name}}'>{{category_name}}</a></li>
+  {{/each}}  
+  </ul>
+
+  {{#each category_products}}
+    <div class = "categoryBar" id= '{{category_name}}'>
+    {{category_name}}
+    </div>
+    <div class = "categoryProducts">
+    {{names}}
+    </div>
+  {{/each}}
+</article>
+
+

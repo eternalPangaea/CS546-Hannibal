@@ -1,8 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
-
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const app = express();
+
+app.use(cookieParser());
+app.use(session({
+  name: 'hannibal_id',
+  secret: 'hannibal',
+  cookie: {
+    maxAge: 60000
+  },
+  resave: false,
+  saveUninitialized: true,
+}));
+
 app.use(fileUpload());
 const path = require("path");
 const static = express.static(__dirname + "/public");

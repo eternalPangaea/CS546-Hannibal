@@ -19,20 +19,24 @@ router.get("/", async(req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  try {
-    const product = await productData.getProductById(req.params.id);
-    let result ={};
-    result.name = product.name;
-    result.price = product.price;
-    result.description = product.description;
-    result.pics = product.pics;
-    result.contact_email = product.contact_email;
-    result.category_id = product.category_id;
-    
-    res.render('products/productinfo',{"product": result});
-  } catch (e) {
-    res.status(404).json({ error: "Product not found" });
-  }
+	
+	  try {
+	    const product = await productData.getProductById(req.params.id);
+	    let result ={};
+	    result.name = product.name;
+	    result.price = product.price;
+	    result.description = product.description;
+	    result.pics = product.pics;
+	    result.contact_email = product.contact_email;
+	    result.category_id = product.category_id;
+	    
+	    res.render('products/productinfo',{"product": result});
+	  } catch (e) {
+	    res.status(404).json({ error: "Product not found" });
+	  }
+	
+	
+
 });
 
 router.post("/", async(req, res) => {

@@ -4,15 +4,24 @@ const users = mongoCollections.users;
 const uuid = require("uuid/v4");
 
 const exportedMethods = {
-	async getUserByName(name){
+	async checkUsername(name){
 		const userCollection = await users();
 		const user = await userCollection.findOne({user_name: name});
 		if(!user){
-			 return true;
+			return true;
 		}
 		else{
 			return false;
 		}
+	}, 
+
+	async getUserByName(name){
+		const userCollection = await users();
+		const user = await userCollection.findOne({user_name: name});
+		if(!user){
+			throw "Wrong username/password";
+		}
+		return user;
 	}, 
 
 	async addUser(name,pass,email){
@@ -36,3 +45,10 @@ const exportedMethods = {
 
 
 module.exports = exportedMethods;
+
+
+
+
+
+
+
