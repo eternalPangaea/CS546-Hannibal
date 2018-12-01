@@ -10,7 +10,7 @@ app.use(session({
   name: 'hannibal_id',
   secret: 'hannibal',
   cookie: {
-    maxAge: 60000
+    maxAge: 600000
   },
   resave: false,
   saveUninitialized: true,

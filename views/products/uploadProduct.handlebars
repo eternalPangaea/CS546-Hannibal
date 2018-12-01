@@ -1,3 +1,8 @@
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
 <h1 id="the-heading">Upload your product!</h1>
 <div class = "row">
   <div class = "col-sm-12">
@@ -35,10 +40,10 @@
       
       <div class = "form-group">
         <label for="pics">Please upload a picture: </label><br>
-        <input type="file" name="pics" id="pics"/> <br><br>
+        <input type="file" name="pics" id="pics" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/> <br><br>
       </div>
 
-        <input type="submit" class="btn btn-default" value='Upload!' />
+        <input type="submit" class="btn btn-success" value='Upload!' /><button type="button" class="btn btn-danger" onclick="goBack()";>Back</button>
       
     </form>    
 

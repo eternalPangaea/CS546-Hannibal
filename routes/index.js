@@ -21,7 +21,7 @@ const constructorMethod = app => {
 		});
 	}
 	else{
-		res.render("users/login", {partial:"ajax_signup"});
+		res.redirect("http://localhost:3000/hannibal");
 	}
   });
 
@@ -36,13 +36,22 @@ const constructorMethod = app => {
   	);
   });
 
+  app.get('/hannibal/logout', (req, res) => {
+     delete req.session.user;
+     res.redirect("http://localhost:3000/hannibal");
+})
+
   app.use("/hannibal/", (req, res) =>{
   	res.render("index");
   });
 
   app.use("*", (req, res) => {
-    res.sendStatus(404);
+    res.redirect("http://localhost:3000/hannibal");
   });
 };
 
 module.exports = constructorMethod;
+
+
+
+

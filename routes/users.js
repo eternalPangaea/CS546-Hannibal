@@ -13,6 +13,7 @@ router.post("/", async(req, res) => {
 			const hashpass = await bcrypt.hash(upload.user_pass,saltRounds);
 			let result = await userData.addUser(upload.user_name, hashpass, upload.contact_email);
 			res.redirect("/hannibal/login");
+			
 		}
 		else{
 			res.render("users/signup", {message:"This username has been taken."});
@@ -43,6 +44,7 @@ router.post("/login", async(req, res) => {
 });
 
 router.get("/email/:id", async(req, res) => {
+	if(req.session.user){
 	try{
 		const email = await userData.getEmailById(req.params.id);
 		res.json(email);
@@ -50,8 +52,15 @@ router.get("/email/:id", async(req, res) => {
 	catch(e){
 		res.status(500).json({error: e});
 	}
+	}
+	else
+		res.redirect("http://localhost:3000/hannibal/");
 });
 
 
 
 module.exports = router;
+
+
+
+

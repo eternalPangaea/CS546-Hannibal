@@ -9,34 +9,40 @@ const exportedMethods = {
 		return post;
 	},
 
-	async addPost(category_id, product_id, name){
+	async addPost(category_id, product_id, name, pic){
 		const category_productsCollection = await category_products();
 		let product_idList = [];
 		let nameList = [];
+		let picList = [];
 		product_idList.push(product_id);
 		nameList.push(name);
+		picList.push(pic);
 		const newPost = {
 			category_id: category_id,
 			product_ids: product_idList,
-			names: nameList
+			names: nameList,
+			pics: picList
 		};
 
 		const newPostInfo = await category_productsCollection.insertOne(newPost);
 		return newPost;
 	},
 
-	async updatePost(category_id, product_id, name){
+	async updatePost(category_id, product_id, name, pic){
 		const category_productsCollection = await category_products();
 		const updatePostData = {};
 		oldPost = await this.getPostById(category_id);
 		
 		let newIdList = oldPost.product_ids;
 		let newNameList = oldPost.names;
+		let newPicList = oldPost.pics;
 		newIdList.push(product_id);
 		newNameList.push(name);
+		newPicList.push(pic);
 
 		updatePostData.product_ids = newIdList;
 		updatePostData.names = newNameList;
+		updatePostData.pics = newPicList;
 	
 		let updateCommand = {
 	      $set: updatePostData

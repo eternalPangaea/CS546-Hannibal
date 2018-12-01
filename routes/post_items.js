@@ -7,6 +7,7 @@ const post_itemsData = data.postItems;
 
 
 router.get("/:id", async (req, res) => {
+  if(req.session.user){
   try {
     const product = await post_itemsData.getPostById(req.params.id);
     let result = [];
@@ -22,6 +23,9 @@ router.get("/:id", async (req, res) => {
   	result.product_id="";
     res.render('products/allProducts',{"products": result});
   }
+  }
+  else
+  	res.redirect("http://localhost:3000/hannibal");
 });
 
 

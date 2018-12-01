@@ -1,9 +1,19 @@
 <article>
   <header>
-    <h1>Shop By Categories</h1>
+    <h1>Hannibal</h1>
   </header>
 {{#if user_id}}
-	<a href="http://localhost:3000/hannibal/postItems/{{user_id}}">posted items</a>
+	<div class="dropdown" id="dropdown">
+	  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Click Me!
+	  <span class="caret"></span></button>
+	  <ul class="dropdown-menu">
+	    <li><a href="#">Edit your profile</a></li>
+	    <li><a href="http://localhost:3000/hannibal/postItems/{{user_id}}">Upload your item</a></li>
+	    <li><a href="http://localhost:3000/hannibal/logout">Logout</a></li>
+	  </ul>
+	</div>
+{{else}}
+	<a class="btn btn-success" href="http://localhost:3000/hannibal/login" id = "navi1" role="button">Login</a>
 {{/if}}
   {{#if error}}
   <div id="login-error" class="error">
@@ -11,7 +21,7 @@
     {{ error }}
   </div>
    {{/if}}
-
+  <p id="sentence">We're better than 'ℇ bay' !</p>
 
   <ul class = "navi">
   {{#each category_products}}
