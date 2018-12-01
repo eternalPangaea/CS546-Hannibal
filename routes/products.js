@@ -6,6 +6,7 @@ const data = require("../data");
 const productData = data.products;
 const post_itemsData = data.postItems;
 const category_productsData = data.categoryProducts;
+const categoriesData = data.categories;
 
 // router.get("/", async(req, res) => {
 // 	try{
@@ -38,13 +39,14 @@ router.get("/postItems/:id", async (req, res) => {
 		  	}
 	  	
 	    const product = await productData.getProductById(req.params.id);
+	    var category = await categoriesData.getCategoryById(product.category_id);
 	    let result ={};
 	    result.name = product.name;
 	    result.price = product.price;
 	    result.description = product.description;
 	    result.pics = product.pics;
 	    result.contact_email = product.contact_email;
-	    result.category_id = product.category_id;
+	    result.category_id = category.name;
 	    
 	    res.render('products/productinfo',{"product": result});
 	  } catch (e) {
