@@ -9,20 +9,20 @@ const constructorMethod = app => {
   app.use("/hannibal/product", productRoutes);
   app.use("/hannibal/user", userRoutes);
   app.use("/hannibal/postItems",post_itemsRoutes);
-  app.use("/hannibal", homeRoutes);
+
   app.use("/hannibal/categories",CategoryRoutes);
 
   //this is upload a product
   app.use("/hannibal/upload", (req, res) =>{
-  	if(req.session.user){
-		res.render("products/uploadProduct",{
-			partial:"showEmail",
-			"user_id":req.session.user.user_id
-		});
-	}
-	else{
-		res.redirect("http://localhost:3000/hannibal");
-	}
+    if(req.session.user){
+  		res.render("products/uploadProduct",{
+  			partial:"showEmail",
+  			"user_id":req.session.user.user_id
+  		});
+  	}
+  	else{
+  		res.redirect("http://localhost:3000/hannibal");
+  	}
   });
 
   //sign up
@@ -39,15 +39,22 @@ const constructorMethod = app => {
   app.get('/hannibal/logout', (req, res) => {
      delete req.session.user;
      res.redirect("http://localhost:3000/hannibal");
-})
+  });
 
-  app.use("/hannibal/", (req, res) =>{
+
+  app.use("/hannibal", homeRoutes);
+  
+  app.use("/hannibal", (req, res) =>{
   	res.render("index");
   });
+
+
 
   app.use("*", (req, res) => {
     res.redirect("http://localhost:3000/hannibal");
   });
+
+
 };
 
 module.exports = constructorMethod;

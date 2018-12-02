@@ -45,6 +45,45 @@ const exportedMethods = {
 
 		const newProductInfo = await productsCollection.insertOne(newProduct);
 		return newProduct;
+	},
+
+	async updateProduct(id, updatedProduct) {
+		const productsCollection = await products();
+		const updatedProductData = {};
+
+		try{
+			//var oldProduct = await this.getProductById(id);
+			updatedProductData.name = updatedProduct.name;
+			updatedProductData.price = updatedProduct.price;
+			updatedProductData.description = updatedProduct.description;
+			updatedProductData.contact_email = updatedProduct.contact_email;
+			updatedProductData.pics = updatedProduct.pics;
+			updatedProductData.category_id = updatedProduct.category_id;
+
+			let updateCommand = {
+				$set: updatedProductData
+			};
+
+			let query = {
+				_id: id
+			};
+
+			await productsCollection.updateOne(query, updateCommand);
+			return await this.getProductById(id);
+		}
+		catch(e){
+
+		}
+	},
+
+	async deleteProduct(id) {
+	    const productsCollection = await products();
+	    const deletionInfo = await productsCollection.removeOne({ _id: id });
+	    if (deletionInfo.deletedCount == 0) {
+	    
+	      throw "Could not delete product";
+	    }
+	    return "success";
 	}
 }
 

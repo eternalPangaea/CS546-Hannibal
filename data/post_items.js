@@ -46,6 +46,50 @@ const exportedMethods = {
 
 	    await post_itemsCollection.updateOne({"user_id": user_id}, updateCommand);
 	    return await this.getPostById(user_id);
+	},
+
+	async editPost(user_id, product_id, name){
+		const post_itemsCollection = await post_items();
+		const updatePostData = {};
+		oldPost = await this.getPostById(user_id);
+		let newIdList = oldPost.product_ids;
+		for(let i = 0; i < newIdList.length; i++){
+			if (newIdList[i] == product_id)
+				var index = i;
+		}
+		oldPost.names[index] = name;
+		let newNameList = oldPost.names;
+
+		updatePostData.product_ids = newIdList;
+		updatePostData.names = newNameList;
+	
+		let updateCommand = {
+	      $set: updatePostData
+	    };
+
+	    await post_itemsCollection.updateOne({"user_id": user_id}, updateCommand);
+	    return await this.getPostById(user_id);
+	},
+
+	async deletePost(user_id, product_id){
+		const post_itemsCollection = await post_items();
+		const updatePostData = {};
+		oldPost = await this.getPostById(user_id);
+		let newIdList = oldPost.product_ids;
+		for(let i = 0; i < newIdList.length; i++){
+			if (newIdList[i] == product_id)
+				var index = i;
+		}
+		oldPost.names.splice(index,1);
+		oldPost.product_ids.splice(index,1);
+		updatePostData.product_ids = oldPost.product_ids;
+		updatePostData.names = oldPost.names;
+		let updateCommand = {
+	      $set: updatePostData
+	    };
+
+	    return await post_itemsCollection.updateOne({"user_id": user_id}, updateCommand);
+	 
 	}
 
 }

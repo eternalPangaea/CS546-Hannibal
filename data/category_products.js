@@ -50,7 +50,94 @@ const exportedMethods = {
 
 	    await category_productsCollection.updateOne({"category_id": category_id}, updateCommand);
 	    return await this.getPostById(category_id);
+	},
+
+	async changeCategory(category_id, product_id, name, pic, old_category_id){
+		const category_productsCollection = await category_products();
+		const updatePostData = {};
+		oldPost = await this.getPostById(old_category_id);
+
+		let newIdList = oldPost.product_ids;
+		for(let i = 0; i < newIdList.length; i++){
+			if (newIdList[i] == product_id)
+				var index = i;
+		}
+		//delete from the old category
+		oldPost.names.splice(index,1);
+		oldPost.product_ids.splice(index,1);
+		oldPost.pics.splice(index,1);
+		updatePostData.product_ids = oldPost.product_ids;
+		updatePostData.names = oldPost.names;
+		updatePostData.pics = oldPost.pics;
+		let updateCommand = {
+	      $set: updatePostData
+	    };
+
+	    await category_productsCollection.updateOne({"category_id": old_category_id}, updateCommand);
+
+		//add it to new category
+		try{
+			return await this.updatePost(category_id, product_id, name, pic);
+		}
+		catch(e){
+			return await this.addPost(category_id, product_id, name, pic);
+		}
+	},
+
+	async editPost(category_id, product_id, name, pic){
+		const category_productsCollection = await category_products();
+		const updatePostData = {};
+		oldPost = await this.getPostById(category_id);
+
+		let newIdList = oldPost.product_ids;
+		for(let i = 0; i < newIdList.length; i++){
+			if (newIdList[i] == product_id)
+				var index = i;
+		}
+		oldPost.names[index] = name;
+		oldPost.pics[index] = pic;
+		let newNameList = oldPost.names;
+		let newPicList = oldPost.pics;
+
+		updatePostData.product_ids = newIdList;
+		updatePostData.names = newNameList;
+		updatePostData.pics = newPicList;
+
+		let updateCommand = {
+	      $set: updatePostData
+	    };
+
+	    await category_productsCollection.updateOne({"category_id": category_id}, updateCommand);
+	    return await this.getPostById(category_id);
+	},
+
+	async deletePost(category_id, product_id){
+		const category_productsCollection = await category_products();
+		const updatePostData = {};
+		oldPost = await this.getPostById(category_id);
+
+		let newIdList = oldPost.product_ids;
+		for(let i = 0; i < newIdList.length; i++){
+			if (newIdList[i] == product_id)
+				var index = i;
+		}
+		oldPost.names.splice(index,1);
+		oldPost.product_ids.splice(index,1);
+		oldPost.pics.splice(index,1);
+
+		updatePostData.product_ids = oldPost.product_ids;
+		updatePostData.names = oldPost.names;
+		updatePostData.pics = oldPost.pics;
+		let updateCommand = {
+	      $set: updatePostData
+	    };
+
+	    return await category_productsCollection.updateOne({"category_id": category_id}, updateCommand);
+
 	}
 }
 
 module.exports = exportedMethods;
+
+
+

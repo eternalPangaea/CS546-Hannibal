@@ -6,6 +6,7 @@ const post_itemsData = data.postItems;
 
 
 
+
 router.get("/:id", async (req, res) => {
   if(req.session.user){
   try {
@@ -28,5 +29,8 @@ router.get("/:id", async (req, res) => {
   	res.redirect("http://localhost:3000/hannibal");
 });
 
+router.get("/*", async(req, res) => {
+  res.redirect("http://localhost:3000/hannibal/");
+});
 
 module.exports = router;

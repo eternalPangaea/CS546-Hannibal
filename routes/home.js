@@ -27,4 +27,9 @@ router.get("/", async(req, res) => {
 		res.status(500).json({error: e});
 	}
 });
+
+router.get("/*", async(req, res) => {
+  res.redirect("http://localhost:3000/hannibal/");
+});
+
 module.exports = router;

@@ -10,7 +10,7 @@ app.use(session({
   name: 'hannibal_id',
   secret: 'hannibal',
   cookie: {
-    maxAge: 600000
+    maxAge: 6000000
   },
   resave: false,
   saveUninitialized: true,
@@ -54,8 +54,8 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 
 app.use("/hannibal/public", static);
 app.use("/hannibal/pics", pic);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.engine("handlebars",  handlebarsInstance.engine);
 app.set("view engine", "handlebars");
