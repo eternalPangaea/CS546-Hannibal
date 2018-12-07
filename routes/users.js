@@ -57,6 +57,66 @@ router.get("/email/:id", async(req, res) => {
 		res.redirect("http://localhost:3000/hannibal/");
 });
 
+// xt
+router.get("/private/:id", async(req, res) => {
+	if(req.session.user)
+	res.render("users/private", {"user_id" : req.params.id, partial:"private"});
+	else
+		res.redirect("http://localhost:3000/hannibal/");
+});
+
+router.post("/private/:id", async(req, res) => {
+	
+	const edit = req.body;
+	const user_id = req.params.id;
+	const updateData = {};
+	try{
+		var oldinfo = await userData.getUserById(user_id);
+	}
+	catch(e){
+		res.render("users/private",{"user_id" : user_id, message:"This username has been taken."});
+		return;
+	}
+	updateData.user_name = oldinfo.user_name;
+	if(edit.user_pass){
+			const hashpass = await bcrypt.hash(edit.user_pass,saltRounds);
+			updateData.user_pass = hashpass;
+	}
+	if(edit.contact_email){
+	 		updateData.contact_email = edit.contact_email;
+	}
+	await userData.updateUserById(req.params.id, updateData);
+	res.json({
+		status:true
+	});
+	
+
+	// let flag = 0;
+	// if(edit.user_name){
+	// 	if(await userData.getUserById(user_id)){
+			
+	// 	}
+	// 	else{
+	// 		flag = 1;
+	// 		res.render("users/private",{"user_id" : user_id, message:"This username has been taken."})
+	// 	}
+	// }
+	// if(flag == 0){
+	// 	if(edit.user_pass){
+	// 		const hashpass = await bcrypt.hash(edit.user_pass,saltRounds);
+	// 		updateData.user_pass = hashpass;
+	// 	}
+	// 	if(edit.contact_email){
+	// 		updateData.contact_email = edit.contact_email;
+	// 	}
+	// 	await userData.updateUserById(req.params.id, updateData);
+	// 	res.json({
+	// 		status:true
+	// 	});
+	// 	// res.redirect("http://localhost:3000/hannibal/");
+	// }
+});
+
 router.get("/*", async(req, res) => {
   res.redirect("http://localhost:3000/hannibal/");
 });

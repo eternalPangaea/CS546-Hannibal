@@ -3,22 +3,17 @@
 function goBack() {
     window.history.back();
 }
+
 </script>
-<a class="btn btn-warning" href="/hannibal/product/editForm/{{product.product_id}}">Edit</a> 
-<button id="delete" class="btn btn-info">delete </button>
-<h1 id="the-heading">Your posted items '{{product.name}}'</h1>
+<h1 id="the-heading">{{product.name}}</h1>
 <div class="row">
     <div class="col-sm-12">		
     	<ul class="list-group list-group-flush">
-  			<li class="list-group-item">category: {{product.category_id}}</li>
-  			<li class="list-group-item">price: {{product.price}}</li>
   			<pre class="list-group-item" style="font-family: Helvetica Neue; font-size: 14px; font-weight:normal;">description: <br>{{product.description}}</pre>
+  			<li class="list-group-item">price: {{product.price}}</li>
   			<li class="list-group-item">contact_email: {{product.contact_email}}</li>
-  			<li class="list-group-item"><img src="{{product.pics}}" id="s_pic"></li>
+  			<li class="list-group-item"><img src="{{product.pics}}" id="s_pic1"></li>
   			<input type="hidden" id="product_id" value={{product.product_id}}>
-        <input type="hidden" id="user_id" value={{user_id}}>
-		</ul>
-    	
-		
+		</ul>	
 	</div>
 </div>

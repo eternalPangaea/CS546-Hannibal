@@ -1,7 +1,22 @@
+#s_pic{
+  max-width:600px;
+  height:auto;
+}
+
+#s_pic1{
+  max-width:500px;
+  height:auto;
+}
+
+#s_pic1:hover{
+  max-width:800px;
+  height:auto;
+}
+
 #error_username{
-	display: inline-block; 
-	float:left;
-	color:red;
+  display: inline-block; 
+  float:left;
+  color:red;
 }
 
 #sentence{
@@ -17,11 +32,11 @@
 }
 
 #user_name{
-	float:left;
+  float:left;
 }
 
 ul.navi{
-	list-style-type: none;
+  list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -29,7 +44,7 @@ ul.navi{
 }
 
 ul.navi li{
-	float:left;
+  float:left;
 }
 
 ul.navi li a {
@@ -37,11 +52,11 @@ ul.navi li a {
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;	
+    text-decoration: none;  
 }
 
 ul.navi li a:hover {
-	background-color: #111;
+  background-color: #111;
 }
 
 div.categoryBar{
@@ -51,7 +66,37 @@ div.categoryBar{
 }
 
 div.categoryProducts{
-	margin:5px 0px;
+    margin:5px 0px;
     height: 300px;
-    background-color:powderblue; 
+    position: relative;
+    overflow: auto; 
+}
+
+div.grids{
+  height:270px;
+  width: 270px;
+  margin:10px 20px 5px 5px;
+  display:inline-block;
+}
+
+span.names{
+  position: relative;
+  bottom: 0;
+  left:0;
+  font-size: 23px;
+  color: black;
+  overflow: hidden;
+  width: 270px;
+  height: 30px;
+}
+
+div.grid_pics{
+  height: 200px;
+  width: 270px;
+  margin-bottom: 20px;
+  background-color: yellow; 
+}
+
+a {
+  color: black;
 }

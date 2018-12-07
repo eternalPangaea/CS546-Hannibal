@@ -8,14 +8,20 @@ router.get("/", async(req, res) => {
 	try{
 		const categoriesList = await categoryData.getAllcategories();
 		const category_products = [];
-		var category_product = {};
 		 for(var i = 0; i < categoriesList.length;i++){
-            try{var category_product = await categoryProductData.getPostById(categoriesList[i]._id);}
-            catch(e){}
+		 	var category_product = {};
+            try{var IdName = await categoryProductData.getPostById(categoriesList[i]._id);}
+            catch(e){ var IdName = null}
 
             category_product.category_name = await categoriesList[i].name;
+            category_product.IdandNames=[];
+            if(IdName != null){
+            for(var n = 0;n <IdName.product_ids.length; n++){
+                category_product.IdandNames.push({product_id:IdName.product_ids[n],product_name:IdName.names[n],product_pic:IdName.pics[n]});
+            }
+
+            }  
             await category_products.push(category_product);
-            category_product = {};
 		}
 		if(req.session.user)
 			await res.render('index',{"category_products":category_products, "user_id":req.session.user.user_id});

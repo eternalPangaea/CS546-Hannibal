@@ -218,9 +218,26 @@ router.delete("/:product_id.:user_id", async(req, res) => {
     res.status(500).json({ error: e });
   }
 });
+//yide
+router.get("/:id", async (req, res) => {
+	
+	  try {
+	    const product = await productData.getProductById(req.params.id);
+	    let result ={};
+	    result.name = product.name;
+	    result.price = product.price;
+	    result.description = product.description;
+	    result.pics = product.pics;
+	    result.contact_email = product.contact_email;
+	    result.category_id = product.category_id;
+	    
+	    res.render('products/productinfo2',{"product": result});
+	  } catch (e) {
+	    res.status(404).json({ error: "Product not found" });
+	  }
+	
+	
 
-router.get("/*", async(req, res) => {
-	res.redirect("http://localhost:3000/hannibal/");
 });
 
 module.exports = router;

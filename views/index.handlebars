@@ -7,7 +7,7 @@
 	  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Click Me!
 	  <span class="caret"></span></button>
 	  <ul class="dropdown-menu">
-	    <li><a href="#">Edit your profile</a></li>
+	    <li><a href="http://localhost:3000/hannibal/user/private/{{user_id}}">Edit your profile</a></li>
 	    <li><a href="http://localhost:3000/hannibal/postItems/{{user_id}}">Upload your item</a></li>
 	    <li><a href="http://localhost:3000/hannibal/logout">Logout</a></li>
 	  </ul>
@@ -23,6 +23,7 @@
    {{/if}}
   <p id="sentence">We're better than 'ℇ bay' !</p>
 
+<h2>Shop By Categories</h2>
   <ul class = "navi">
   {{#each category_products}}
    <li><a href='#{{category_name}}'>{{category_name}}</a></li>
@@ -30,13 +31,31 @@
   </ul>
 
   {{#each category_products}}
-    <div class = "categoryBar" id= '{{category_name}}'>
+    <div class = "categoryBar page-header" id= '{{category_name}}'>
     {{category_name}}
     </div>
     <div class = "categoryProducts">
-    {{names}}
+  
+    {{#each IdandNames}}
+    <div class = "grids">
+    <div class = "grid_pics">
+    <a href="http://localhost:3000/hannibal/product/{{product_id}}">
+    <img src='{{product_pic}}' width="270px" height="200px">
+    </a>
+    </div>
+    <span class = "names">
+    <a class = "names" href="http://localhost:3000/hannibal/product/{{product_id}}">
+    {{product_name}}
+    </a>
+    </span>
+    </div>
+  {{/each}}
+
     </div>
   {{/each}}
 </article>
+
+
+
 
 
