@@ -42,6 +42,13 @@ const exportedMethods = {
 		return result.contact_email;
 	},
 
+	async getUserById2(id){
+		const userCollection = await users();
+		const user = await userCollection.findOne({_id:id});
+		if(!user) throw "user not found";
+		return user;
+	},
+
 	//xt
 	async getUserById(id) {
         if (!id) throw "No User ID provided!";

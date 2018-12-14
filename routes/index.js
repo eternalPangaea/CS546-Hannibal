@@ -45,7 +45,7 @@ const constructorMethod = app => {
   app.use("/hannibal", homeRoutes);
   
   app.use("/hannibal", (req, res) =>{
-  	res.render("index");
+  	res.render("index", {partial:"scroll_btn"});
   });
 
 

@@ -1,3 +1,11 @@
+#info_pre{
+  font-family: Helvetica Neue; 
+  font-size: 14px; 
+  font-weight:normal; 
+  white-space:pre-wrap; 
+  word-wrap:break-word;
+}
+
 #s_pic{
   max-width:600px;
   height:auto;
@@ -20,7 +28,7 @@
 }
 
 #sentence{
-  font-size:18px;
+  font-size:17px;
   font-style:italic;
 }
 
@@ -62,14 +70,22 @@ ul.navi li a:hover {
 div.categoryBar{
    font-style: normal;
    font-size:30px;
-   margin: 8px 0px;
+   margin: 8px 0px 0px;
+}
+
+div.CateProdOuterBox{
+    margin:0px;
+    height:310px;
+    position: relative;
+    
 }
 
 div.categoryProducts{
-    margin:5px 0px;
+    margin:0px 30px;
     height: 300px;
     position: relative;
-    overflow: auto; 
+    overflow: hidden;
+    white-space: nowrap; 
 }
 
 div.grids{
@@ -79,7 +95,7 @@ div.grids{
   display:inline-block;
 }
 
-span.names{
+div.names{
   position: relative;
   bottom: 0;
   left:0;
@@ -94,9 +110,35 @@ div.grid_pics{
   height: 200px;
   width: 270px;
   margin-bottom: 20px;
-  background-color: yellow; 
+  background-color: white; 
 }
 
 a {
   color: black;
 }
+
+.scroll-btn{
+  top:80px;
+  position: absolute;
+  opacity: 0.6;
+  height:70px;
+  color: black;
+  background-image: url(https://m.media-amazon.com/images/G/01/AUIClients/AmazonGatewayAuiAssets-gw_sprite_desktop_hires-4c97ad6…._V2_.png);
+  background-position: -14px 0;
+}
+
+.scroll-btn:hover{
+   opacity: 1.0;
+   cursor: pointer;
+}
+
+.button-left{
+  left:0;
+  visibility: hidden;
+
+}
+
+.button-right{
+  right:0;
+}
+

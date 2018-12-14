@@ -10,12 +10,17 @@ const exportedMethods = {
 	},
 
 	async getAllcategoriesName(){
-
 		const categoriesCollection = await categories();
 		var allCategories = await categoriesCollection.find({}).toArray();
-
 		var names = allCategories.map(item => item.name);
 		return names;
+	},
+
+	async getCategoryByName(name){
+		const categoriesCollection = await categories();
+		const category = await categoriesCollection.findOne({name:name});
+		if(!category) throw "category not found";
+		return category;
 	},
 
 	async getCategoryById(id){

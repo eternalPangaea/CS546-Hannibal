@@ -14,8 +14,9 @@ const categoriesData = data.categories;
 
 router.get("/postItems/:id", async (req, res) => {
 	if(req.session.user){
-	  try {
-	  	//check whether this user has authentication to edit this product
+	    try {
+		  	const product = await productData.getProductById(req.params.id);
+		  	//check whether this user has authentication to edit this product
 		  	let post_items = await post_itemsData.getPostById(req.session.user.user_id);
 		  	let lists = post_items.product_ids;
 		  	for(let i = 0; i < lists.length; i++){
@@ -25,35 +26,29 @@ router.get("/postItems/:id", async (req, res) => {
 		  			res.redirect("http://localhost:3000/hannibal/");
 	  				return;
 		  		}
-		  	}
-	  	
-	    const product = await productData.getProductById(req.params.id);
-	    var category = await categoriesData.getCategoryById(product.category_id);
-	    let result ={};
-	    result.product_id = product._id;
-	    result.name = product.name;
-	    result.price = product.price;
-	    result.description = product.description;
-	    result.pics = product.pics;
-	    result.contact_email = product.contact_email;
-	    result.category_id = category.name;
-	    
-	    res.render('products/productinfo',{"product": result, partial:"delete", "user_id":req.session.user.user_id});
-	  } catch (e) {
-	    res.status(404).json({ error: "Product not found" });
-	  }
+			}
+		    var category = await categoriesData.getCategoryById(product.category_id);
+		    let result ={};
+		    result.product_id = product._id;
+		    result.name = product.name;
+		    result.price = product.price;
+		    result.description = product.description;
+		    result.pics = product.pics;
+		    result.contact_email = product.contact_email;
+		    result.category_id = category.name;
+		    
+		    res.render('products/productinfo',{"product": result, partial:"delete", "user_id":req.session.user.user_id});
+		}catch (e) {
+	    	res.render('products/productinfo2',{"hasErrors":true, "error": "Server is busy, this product is not found..." });
+	  	}
 	}
 	else{
 		res.redirect("http://localhost:3000/hannibal");
 	}
-	
-	
-
 });
 
 router.put("/:id", async(req, res) => {
 	const mutilParts = req.body;
-
 	try{
 		var oldProduct = await productData.getProductById(req.params.id);
 	}
@@ -61,7 +56,6 @@ router.put("/:id", async(req, res) => {
 		res.status(404).json({ error: "This product doesn't exist"});
 	}
 	try{
-		
 		if(typeof mutilParts.name != "string") throw "No product's name provided";
 		//if(typeof mutilParts.price != "number") throw "No product's price provided";
 		if(typeof mutilParts.description != "string") throw "No product's description provided";
@@ -108,7 +102,6 @@ router.put("/:id", async(req, res) => {
 		// if product's name changes, need to change #post_items
 		if(newProduct.name != oldProduct.name)
 			await post_itemsData.editPost(mutilParts.user_id, req.params.id, newProduct.name);
-		
 		res.json(updatedProduct);
 	}
 	catch(e){
@@ -163,13 +156,14 @@ router.post("/", async(req, res) => {
 		//add post_items the user_id and product_id and also catrgory_products
 	}
 	catch(e){
-		res.status(500).json({error: e});
+		res.render("products/uploadProduct",{"hasErrors": true});
 	}
 });
 
-  router.get("/editForm/:id", async(req, res) => {
+router.get("/editForm/:id", async(req, res) => {
   	if(req.session.user){
-	  try {
+	  	try {
+	  		var product = await productData.getProductById(req.params.id);
 	  	//check whether this user has authentication to edit this product
 		  	let post_items = await post_itemsData.getPostById(req.session.user.user_id);
 		  	let lists = post_items.product_ids;
@@ -181,47 +175,46 @@ router.post("/", async(req, res) => {
 	  				return;
 		  		}
 		  	}
-	var product = await productData.getProductById(req.params.id);
-    res.render("products/editProduct",{
-      partial:"edit",
-      "user_id":req.session.user.user_id,
-      "product": product,
-      "product_id":req.params.id
-    });
-    }
-    catch (e) {
-	    	res.redirect("http://localhost:3000/hannibal");
-	}
+			var product = await productData.getProductById(req.params.id);
+		    res.render("products/editProduct",{
+		      partial:"edit",
+		      "user_id":req.session.user.user_id,
+		      "product": product,
+		      "product_id":req.params.id
+		    });
+    	}
+    	catch (e) {
+	    	res.render('products/editProduct',{"hasErrors":true, "error": "Server is busy, this product is not found..." });  	
+		}
 	}
 	else{
 		res.redirect("http://localhost:3000/hannibal");
 	}
-	
-  });
+});
+
 
 router.delete("/:product_id.:user_id", async(req, res) => {
-  try {
-    var info = await productData.getProductById(req.params.product_id);
+  	try {
+    	var info = await productData.getProductById(req.params.product_id);
   	}
-  catch (e) {
-    res.status(404).json({ error: "Product not found"});
-    return;
+  	catch (e) {
+    	res.status(404).json({ error: "Product not found"});
+    	return;
   	}
-  try {
-    await productData.deleteProduct(req.params.product_id);
-    await post_itemsData.deletePost(req.params.user_id, req.params.product_id);
-    await category_productsData.deletePost(info.category_id, req.params.product_id);
-    res.redirect("/hannibal/postItems/"+req.params.user_id);
-    
-  } 
-  catch (e) {
-    res.status(500).json({ error: e });
-  }
+  	try {
+    	await productData.deleteProduct(req.params.product_id);
+    	await post_itemsData.deletePost(req.params.user_id, req.params.product_id);
+    	await category_productsData.deletePost(info.category_id, req.params.product_id);
+    	res.redirect("/hannibal/postItems/"+req.params.user_id);
+  	} 
+  	catch (e) {
+    	res.status(500).json({ error: e });
+  	}
 });
+
 //yide
 router.get("/:id", async (req, res) => {
-	
-	  try {
+	try {
 	    const product = await productData.getProductById(req.params.id);
 	    let result ={};
 	    result.name = product.name;
@@ -232,12 +225,9 @@ router.get("/:id", async (req, res) => {
 	    result.category_id = product.category_id;
 	    
 	    res.render('products/productinfo2',{"product": result});
-	  } catch (e) {
-	    res.status(404).json({ error: "Product not found" });
-	  }
-	
-	
-
+	}catch (e) {
+	    res.render('products/productinfo2',{"hasErrors":true, "error": "Server is busy, this product is not found..." });
+	}
 });
 
 module.exports = router;

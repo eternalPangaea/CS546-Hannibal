@@ -1,8 +1,7 @@
 <h1 id="the-heading">Create your amazing account!</h1>
 <div class = "row">
   <div class = "col-sm-12">
-    <form id = "static-form" ref='uploadForm' 
-     id='uploadForm' 
+    <form id = "static-form" 
      action='http://localhost:3000/hannibal/user' 
      method='post' 
      encType="multipart/form-data">
@@ -21,7 +20,7 @@
       
       <div class = "form-group">
         <label for="contact_email">Please type email: </label><br>
-        <input type="text" name="contact_email" id="contact_email" placeholder="Email"/><br><br>
+        <input type="email" name="contact_email" id="contact_email" placeholder="Email"/><br><br>
       </div>
 
       <input type="submit" class="btn btn-success" value='Sign Up!' /> <a class="btn btn-danger" href="http://localhost:3000/hannibal/login" role="button">Go Back to Login!</a>

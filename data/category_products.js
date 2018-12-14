@@ -9,6 +9,21 @@ const exportedMethods = {
 		return post;
 	},
 
+	async getPostByCatKey(category_id,key){
+		const category_productsCollection = await category_products();
+		const arr = await category_productsCollection.find({ category_id: category_id}).toArray();
+		var reg = new RegExp(key.toLowerCase());
+		var n = 0;
+		var getPost = [];
+		arr[0].names.forEach(function(element) {
+			if(reg.test(element.toLowerCase())){
+				n = arr[0].names.indexOf(element,n);
+				getPost.push({product_ids: arr[0].product_ids[n], names: arr[0].names[n], pics: arr[0].pics[n]});
+			}
+		});
+		return getPost;
+	},
+	
 	async addPost(category_id, product_id, name, pic){
 		const category_productsCollection = await category_products();
 		let product_idList = [];
